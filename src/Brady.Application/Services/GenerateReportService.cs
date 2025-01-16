@@ -29,11 +29,12 @@ namespace Brady.Application.Services
 
         public bool CreateReport()
         {
-            string ?filename = Directory.GetFiles(_options.InputFolder).FirstOrDefault();
-            if (filename is null)
+            string ?fileName = Directory.GetFiles(_options.InputFolder).FirstOrDefault();
+        
+            if (fileName is null )// or _fileSerice.Exist(fileName))
                 return false;
 
-            var reportData = _generationReportRepository.LoadXml(filename);
+            var reportData = _generationReportRepository.LoadXml(fileName);
 
             if (reportData is null)
                 return false;
@@ -45,8 +46,10 @@ namespace Brady.Application.Services
                 ActualHeatRates = _calculationService.ActualHeatRates(reportData)
             };
 
-            _generationOutputRepository.CreateXml(generationOutput, Path.Combine(_options.OutputFolder, "report.xml"));
-            _generationReportRepository.DeleteXml(filename);
+
+            _generationOutputRepository.CreateXml(generationOutput, Path.Combine(_options.OutputFolder, $"report_{DateTime.Now.ToString("yyyy_MM_dd")}.xml")); 
+            _generationReportRepository.DeleteXml(fileName);
+            // _fileSerice.AddFileName(fileName))
 
             return true;
         }

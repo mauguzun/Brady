@@ -2,7 +2,7 @@
 
 namespace Brady.Infrastructure.Repositories
 {
-    public class BaseRepository<T> where T : class
+    public abstract class BaseRepository<T> where T : class
     {
         public T LoadXml(string fileName)
         {

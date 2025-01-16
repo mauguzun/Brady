@@ -4,7 +4,7 @@ using Brady.Domain.Models.Generators.Types.Wind;
 
 namespace Brady.Domain.Models.Generators
 {
-    public class GenerationReport
+    public sealed class GenerationReport
     {
         public required List<WindGenerator> Wind { get; init; }
         public required List<GasGenerator> Gas { get; init; }

@@ -2,9 +2,9 @@
 
 namespace Brady.Domain.Models.Generators
 { 
-    public class Day
+    public sealed class Day
     {
-        public required DateTime Date { get; init; }
+        public required DateTimeOffset Date { get; init; }
         public required decimal Energy { get; init; }
         public required decimal Price { get; init; }
     }

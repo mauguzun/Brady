@@ -1,10 +1,6 @@
-﻿using System.Xml.Serialization;
-
-namespace Brady.Domain.Models.Output
+﻿namespace Brady.Domain.Models.Output
 {
-
-    [XmlRoot("Day")]
-    public class Day
+    public sealed class Day
     {
         public required string Name { get; init; }
         public DateTime Date { get; init; }

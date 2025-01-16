@@ -1,6 +1,6 @@
 ﻿namespace Brady.Domain.Enum
 {
-    public enum WindType
+    public enum GenerationLocation
     {
         Offshore,
         Onshore

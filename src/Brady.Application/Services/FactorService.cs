@@ -19,12 +19,12 @@ namespace Brady.Application.Services
         };
       
 
-        public decimal ValueFactor(GenerationType type, WindType windType = WindType.Offshore) => type switch
+        public decimal ValueFactor(GenerationType type, GenerationLocation windType = GenerationLocation.Offshore) => type switch
         {
             GenerationType.Wind => windType switch
             {
-                WindType.Offshore => referenceData.Factors.ValueFactor.Low,
-                WindType.Onshore => referenceData.Factors.ValueFactor.High,
+                GenerationLocation.Offshore => referenceData.Factors.ValueFactor.Low,
+                GenerationLocation.Onshore => referenceData.Factors.ValueFactor.High,
                 _ => throw new ArgumentException($"Unknown wind type: {windType}")
             },
             GenerationType.Gas or GenerationType.Coal => referenceData.Factors.ValueFactor.Medium,

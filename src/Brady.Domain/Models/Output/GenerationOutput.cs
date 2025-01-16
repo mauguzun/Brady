@@ -1,6 +1,4 @@
-﻿using System.Xml.Serialization;
-
-namespace Brady.Domain.Models.Output
+﻿namespace Brady.Domain.Models.Output
 {
     public sealed class GenerationOutput
     {

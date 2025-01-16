@@ -24,19 +24,19 @@ namespace Brady.Application.Services
              .SelectMany(g => g.Generation.Select(d => new Domain.Models.Output.Day
              {
                  Name = g.Name,
-                 Date = d.Date,
+                 Date = d.Date.DateTime,
                  Emission = d.Energy * g.EmissionsRating * factorService.EmissionFactor(GenerationType.Gas)
              }))
              .Concat(report.Coal
                  .SelectMany(g => g.Generation.Select(d => new Domain.Models.Output.Day
                  {
                      Name = g.Name,
-                     Date = d.Date,
+                     Date = d.Date.DateTime,
                      Emission = d.Energy * g.EmissionsRating * factorService.EmissionFactor(GenerationType.Coal)   
                  })))
              .GroupBy(m => m.Date)
              .Select(g => g.OrderByDescending(m => m.Emission).First())
-             .OrderBy(m => m.Name)
+             .OrderByDescending(m => m.Emission)
              .ToList();
         }
 
@@ -44,8 +44,8 @@ namespace Brady.Application.Services
         {
             var generators = new List<Generator>();
 
-            generators.AddRange(GetGenerators(report.Wind.Where(w => w.Location.ToLower() == WindType.Offshore.ToString().ToLower()), factorService.ValueFactor(GenerationType.Wind, WindType.Offshore)));
-            generators.AddRange(GetGenerators(report.Wind.Where(w => w.Location.ToLower() == WindType.Onshore.ToString().ToLower()), factorService.ValueFactor(GenerationType.Wind, WindType.Onshore)));
+            generators.AddRange(GetGenerators(report.Wind.Where(w => w.Location.ToLower() == GenerationLocation.Offshore.ToString().ToLower()), factorService.ValueFactor(GenerationType.Wind, GenerationLocation.Offshore)));
+            generators.AddRange(GetGenerators(report.Wind.Where(w => w.Location.ToLower() == GenerationLocation.Onshore.ToString().ToLower()), factorService.ValueFactor(GenerationType.Wind, GenerationLocation.Onshore)));
             generators.AddRange(GetGenerators(report.Gas, factorService.ValueFactor(GenerationType.Gas)));
             generators.AddRange(GetGenerators(report.Coal, factorService.ValueFactor(GenerationType.Coal)));
 
