@@ -1,8 +1,8 @@
 ﻿namespace Brady.Domain.Models.Output
 {
-    public class Totals
+    public sealed class Totals
     {
-        public List<Generator> Generator { get; set; }
+        public required List<Generator> Generator { get; init; }
     }
 
 }

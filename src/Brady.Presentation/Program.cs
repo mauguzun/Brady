@@ -7,6 +7,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 
+const string sectionName = "ApplicationOptions";
+
 var configuration = new ConfigurationBuilder()
            .SetBasePath(Directory.GetCurrentDirectory())
            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: false)
@@ -14,30 +16,28 @@ var configuration = new ConfigurationBuilder()
 
 
 var services = new ServiceCollection();
+services.Configure<ApplicationOptions>(opt => configuration.GetSection(sectionName).Bind(opt));
 
-
-services.Configure<ApplicationOptions>(opt => configuration.GetSection("FilePaths").Bind(opt));
-
+// repositories
 services.AddSingleton<IReferenceDataRepository, ReferenceDataRepository>();
 services.AddTransient<IGenerationOutputRepository, GenerationOutputRepository>();
 services.AddTransient<IGenerationReportRepository, GenerationReportRepository>();
 
-services.AddTransient<ICalculationService, CalculationService>();
+// services
+services.AddTransient<IFactorService, FactorService>();
 services.AddTransient<IGenerateReportService, GenerateReportService>();
+services.AddTransient<ICalculationService, CalculationService>();
 
 
 
 IServiceProvider build = services.BuildServiceProvider();
 
 var reportService = build.GetRequiredService<IGenerateReportService>();
-int reportSettings = configuration.GetSection("FilePaths").Get<ApplicationOptions>()!.Timeout;
+int reportSettings = configuration.GetSection(sectionName).Get<ApplicationOptions>()!.Timeout;
 
 
 while (true)
 {
-    if(reportService.CreateReport())
-    {
-        Console.WriteLine("Created new report");
-    }
+    Console.WriteLine(reportService.CreateReport() ? "Created new report" : "Awaiting file...");
     await Task.Delay(reportSettings);
 }
