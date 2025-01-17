@@ -17,7 +17,6 @@ namespace Brady.Services
         private const string _coalGeneration = "CoalGeneration";
         private const string _gasGenerator = "GasGeneration";
 
-
         [Fact]
         public void Totals_ShouldBeValid()
         {

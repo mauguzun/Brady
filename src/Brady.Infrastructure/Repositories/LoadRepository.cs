@@ -1,8 +1,9 @@
-﻿using System.Xml.Serialization;
+﻿using Brady.Infrastructure.Interfaces;
+using System.Xml.Serialization;
 
 namespace Brady.Infrastructure.Repositories
 {
-    public abstract class BaseRepository<T> where T : class
+    public abstract class LoadRepository<T> : ILoadRepository<T> where T : class
     {
         public T LoadXml(string fileName)
         {

@@ -9,8 +9,7 @@ namespace Brady.Application.Services
 {
     public class FactorService(IReferenceDataRepository factorRepository, IOptions<ApplicationOptions> options) : IFactorService
     {
-        private readonly ReferenceData referenceData = factorRepository.LoadXml(options.Value.ReferenceData) ?? throw new InvalidDataException();
-
+        private readonly ReferenceData referenceData = factorRepository.LoadXml(options.Value.ReferenceData)!;
         public decimal EmissionFactor(GenerationType type) => type switch
         {
             GenerationType.Gas => referenceData.Factors.EmissionsFactor.Medium,

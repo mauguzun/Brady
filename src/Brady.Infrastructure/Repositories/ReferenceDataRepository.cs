@@ -3,7 +3,7 @@ using Brady.Infrastructure.Interfaces;
 
 namespace Brady.Infrastructure.Repositories
 {
-    public class ReferenceDataRepository :BaseRepository<ReferenceData>, IReferenceDataRepository
+    public class ReferenceDataRepository :LoadRepository<ReferenceData>, IReferenceDataRepository
     {
     }
 }

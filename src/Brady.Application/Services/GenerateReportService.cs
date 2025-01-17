@@ -24,7 +24,6 @@ namespace Brady.Application.Services
             _generationReportRepository = generationReportRepository;
             _generationOutputRepository = generationOutputRepository;
             _options = options.Value;
-
         }
 
         public bool CreateReport()
@@ -45,7 +44,6 @@ namespace Brady.Application.Services
                 MaxEmissionGenerators = _calculationService.MaxEmissionGenerators(reportData),
                 ActualHeatRates = _calculationService.ActualHeatRates(reportData)
             };
-
 
             _generationOutputRepository.CreateXml(generationOutput, Path.Combine(_options.OutputFolder, $"report_{DateTime.Now.ToString("yyyy_MM_dd")}.xml")); 
             _generationReportRepository.DeleteXml(fileName);

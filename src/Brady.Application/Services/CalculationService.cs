@@ -24,14 +24,14 @@ namespace Brady.Application.Services
              .SelectMany(g => g.Generation.Select(d => new Domain.Models.Output.Day
              {
                  Name = g.Name,
-                 Date = d.Date.DateTime,
+                 Date = d.Date,
                  Emission = d.Energy * g.EmissionsRating * factorService.EmissionFactor(GenerationType.Gas)
              }))
              .Concat(report.Coal
                  .SelectMany(g => g.Generation.Select(d => new Domain.Models.Output.Day
                  {
                      Name = g.Name,
-                     Date = d.Date.DateTime,
+                     Date = d.Date,
                      Emission = d.Energy * g.EmissionsRating * factorService.EmissionFactor(GenerationType.Coal)   
                  })))
              .GroupBy(m => m.Date)
